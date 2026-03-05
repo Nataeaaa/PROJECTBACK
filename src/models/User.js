@@ -7,8 +7,14 @@ export const User = sequelize.define('User', {
         primaryKey: true,
         autoIncrement: true
     },
-    name: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,  // no tenía restricción
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,  // no tenía restricción
+    },
     email: {
         type: DataTypes.STRING,
         unique: true,
@@ -17,5 +23,12 @@ export const User = sequelize.define('User', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+
+    // FALTABA: FK del diagrama (Usuarios → Roles)
+    Id_rol: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 2, // 1=Admin, 2=Cliente por defecto
     }
 });
