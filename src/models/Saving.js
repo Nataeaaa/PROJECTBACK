@@ -24,4 +24,10 @@ export const Saving = sequelize.define('Saving', {
         type: DataTypes.ENUM('active', 'completed', 'deleted'),
         allowNull: false,
     },
+    //FKs
+    Id_account: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'Accounts', key: 'Id_account' }
+    }
 });

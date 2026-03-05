@@ -25,4 +25,10 @@ export const Account = sequalize.define('Account', {
     defaultValue: 'MXN',
     allowNull: false,
     },
+    // FALTABA: FK hacia Users
+    Id_user: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'Users', key: 'Id_user' }
+    }
 });

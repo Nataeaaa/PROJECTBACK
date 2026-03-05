@@ -28,4 +28,4 @@ Category.belongsTo(User, { foreignKey: "Id_user" });
 Category.hasMany(Transaction, { foreignKey: "Id_category" });
 Transaction.belongsTo(Category, { foreignKey: "Id_category" });
 
-export { Rol, User, Account, Transaction, Saving, Category }; // ✅ exportar Category
+export { Rol, User, Account, Transaction, Saving, Category }; 
