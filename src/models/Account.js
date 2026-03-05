@@ -15,9 +15,14 @@ export const Account = sequalize.define('Account', {
         type: DataTypes.ENUM('active', 'inactive'),
         allowNull: false,
     },
-    saving: {
-        type: DataTypes.FLOAT,
-        defaultValue: 0,
+    balance: {
+    type: DataTypes.DECIMAL(10, 2), // Ej: 99999999.99
+    defaultValue: 0.00,
+    allowNull: false,
     },
-
+    currency: {
+    type: DataTypes.ENUM('USD', 'MXN', 'EUR', 'COP'),
+    defaultValue: 'MXN',
+    allowNull: false,
+    },
 });

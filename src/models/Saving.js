@@ -12,8 +12,13 @@ export const Saving = sequelize.define('Saving', {
         allowNull: false,
     },
     amount: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
+    },
+    // ¿Para cuándo quiero ahorrar X cantidad?
+    targetDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
     },
     state: {
         type: DataTypes.ENUM('active', 'completed', 'deleted'),

@@ -7,10 +7,44 @@ export const Transaction = sequelize.define('Transaction', {
         primaryKey: true,
         autoIncrement: true,
     },
-    type: DataTypes.STRING,
-    name: DataTypes.STRING,
-    amount: DataTypes.FLOAT,
-    category: DataTypes.STRING,
-    date: DataTypes.DATE,
-    periodic: DataTypes.BOOLEAN,
+    type: {
+        type: DataTypes.ENUM('income', 'expense'),
+        allowNull: false,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    amount: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING(500), //Agregado, para notas del gasto
+        allowNull: true,
+    },
+    date: {
+        type: DataTypes.DATEONLY, 
+        allowNull: false,
+    },
+    periodic: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    periodicFrequency: {
+        type: DataTypes.ENUM('daily', 'weekly', 'monthly', 'yearly'),
+        allowNull: true, // ✅ solo aplica si periodic = true
+    },
+
+    //FKs
+    Id_category: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'Categories', key: 'Id_category' }
+    },
+    Id_account: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'Accounts', key: 'Id_account' }
+    }
 });
