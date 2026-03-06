@@ -24,16 +24,24 @@ export const Transaction = sequelize.define('Transaction', {
         allowNull: true,
     },
     date: {
-        type: DataTypes.DATEONLY, 
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     periodic: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    // Podrías agregar un hook para validar esto
     periodicFrequency: {
         type: DataTypes.ENUM('daily', 'weekly', 'monthly', 'yearly'),
-        allowNull: true, // ✅ solo aplica si periodic = true
+        allowNull: true,
+        validate: {
+            isValidWithPeriodic(value) {
+                if (this.periodic && !value) {
+                    throw new Error('periodicFrequency es requerido cuando periodic es true');
+                }
+            }
+        }
     },
 
     //FKs

@@ -18,7 +18,7 @@ export const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false,  
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
@@ -29,6 +29,7 @@ export const User = sequelize.define('User', {
     Id_rol: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 2, // 1=Admin, 2=Cliente por defecto
+        defaultValue: 2,
+        references: { model: 'Rols', key: 'Id_rol' } // ← falta esto
     }
 });
