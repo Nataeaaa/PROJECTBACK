@@ -14,7 +14,7 @@ export const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log('Conectado a mysql');
-        await sequelize.sync(); // crear o actualiza los automáticamente las tablas según los modelos definidos
+        await sequelize.sync(/*{alter:true}*/); // crear o actualiza los automáticamente las tablas según los modelos definidos
         console.log('Modelos sincronizados con la base de datos');
     } catch (err) {
         console.error('Error conectado a mysql', err);

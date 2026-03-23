@@ -13,7 +13,11 @@ export const Saving = sequelize.define('Saving', {
     },
     amount: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+        allowNull: true,
+    },
+    goal: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
     },
     // ¿Para cuándo quiero ahorrar X cantidad?
     targetDate: {
