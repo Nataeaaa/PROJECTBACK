@@ -41,13 +41,14 @@ export const getAccountById = async (req, res) => {
 // ─────────────────────────────────────────────
 export const createAccount = async (req, res) => {
     try {
-        const { subscriptionType, currency, balance } = req.body;
+        const { subscriptionType, currency, balance, name } = req.body;
 
         if (!subscriptionType) {
             return res.status(400).json({ message: "subscriptionType es requerido." });
         }
 
-        const account = await Account.create({
+        const account = await Account.create({ 
+            name: name || null,
             subscriptionType,
             currency: currency || "MXN",
             balance: balance || 0.0,
@@ -78,9 +79,10 @@ export const updateAccount = async (req, res) => {
             return res.status(404).json({ message: "Cuenta no encontrada." });
         }
 
-        const { subscriptionType, currency, state } = req.body;
+        const { subscriptionType, currency, state, name } = req.body;
 
         await account.update({
+            ...(name !== undefined && { name }),
             ...(subscriptionType && { subscriptionType }),
             ...(currency && { currency }),
             ...(state && { state }),
