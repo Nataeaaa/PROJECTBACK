@@ -36,18 +36,15 @@ export const getTransactionById = async (req, res) => {
 
 export const createTransaction = async (req, res) => {
     try {
-        const { type, name, amount, date, description, periodic, periodicFrequency, Id_category } = req.body;
+        const { type, name, amount, date, description, periodic, periodicFrequency, Id_category, Id_account } = req.body;
 
-        if (!type || !amount || !date || !Id_category) {
-            return res.status(400).json({ message: "type, amount, date e Id_category son requeridos." });
+        if (!type || !amount || !date || !Id_category || !Id_account) {
+            return res.status(400).json({ message: "type, amount, date, Id_category e Id_account son requeridos." });
         }
 
-        if (!['income', 'expense'].includes(type)) {
-            return res.status(400).json({ message: "type debe ser 'income' o 'expense'." });
-        }
-
+        // Verificar que la cuenta pertenece al usuario
         const account = await Account.findOne({ 
-            where: { Id_user: req.user.id, state: 'active' } 
+            where: { Id_account, Id_user: req.user.id, state: 'active' } 
         });
         if (!account) return res.status(404).json({ message: "Cuenta no encontrada." });
 
