@@ -11,6 +11,10 @@ import accountRoutes from './routes/accountRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import savingRoutes from './routes/savingRoutes.js';
 import transactionRoutes from './routes/transactionRoutes.js';
+import challengeRoutes from './routes/challengeRoutes.js';
+
+//ruta de ia
+import adviceRoutes from './routes/adviceRoutes.js';
 
 const app = express();
 app.use(cors({
@@ -26,6 +30,8 @@ app.use('/api/accounts', accountRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/savings', savingRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/challenges', challengeRoutes);
+app.use('/api/advice', adviceRoutes);
 
 await connectDB();
 

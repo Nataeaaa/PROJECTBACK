@@ -4,6 +4,8 @@ import { Account } from "./Account.js";
 import { Saving } from "./Saving.js";
 import { Transaction } from "./Transaction.js";
 import { Category } from "./Category.js";
+import { Challenge } from "./Challenge.js";
+
 // Roles → Usuarios
 Rol.hasMany(User, { foreignKey: "Id_rol" });
 User.belongsTo(Rol, { foreignKey: "Id_rol" });
@@ -28,4 +30,12 @@ Category.belongsTo(User, { foreignKey: "Id_user" });
 Category.hasMany(Transaction, { foreignKey: "Id_category" });
 Transaction.belongsTo(Category, { foreignKey: "Id_category" });
 
-export { Rol, User, Account, Transaction, Saving, Category }; 
+// Usuarios → Retos
+User.hasMany(Challenge, { foreignKey: "Id_user" });
+Challenge.belongsTo(User, { foreignKey: "Id_user" });
+
+// Categorías → Retos
+Category.hasMany(Challenge, { foreignKey: "Id_category" });
+Challenge.belongsTo(Category, { foreignKey: "Id_category" });
+
+export { Rol, User, Account, Transaction, Saving, Category, Challenge }; 
