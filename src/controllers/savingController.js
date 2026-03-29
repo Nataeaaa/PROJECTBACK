@@ -39,16 +39,17 @@ export const getSavingById = async (req, res) => {
 
 export const createSaving = async (req, res) => {
     try {
-        const { save_name, amount, targetDate, goal } = req.body;
+        const { save_name, amount, targetDate, goal, Id_account } = req.body;
 
         if (!save_name || !amount || !goal) {
             return res.status(400).json({ message: "Nombre, monto y objetivo son requeridos." });
         }
 
-        // Busca la cuenta activa del usuario
-        const account = await Account.findOne({ 
-            where: { Id_user: req.user.id, state: 'active' } 
+        // Busca la cuenta activa del usuario        
+        const account = await Account.findOne({
+            where: { Id_account, Id_user: req.user.id }
         });
+
         if (!account) {
             return res.status(404).json({ message: "Cuenta no encontrada." });
         }
