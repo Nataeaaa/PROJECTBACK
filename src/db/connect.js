@@ -1,11 +1,21 @@
 import { Sequelize } from "sequelize";
 
-const {DB_NAME, DB_USER, DB_PASS, DB_HOST } = process.env;
+const { DB_NAME, DB_USER, DB_PASS, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     host: DB_HOST,
     dialect: 'mysql',
-    logging: false, // Desactiva los logs de Sequelize
+    logging: false,
+    pool: {
+        max: 2,        // serverless necesita pool pequeño
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+        evict: 10000,
+    },
+    dialectOptions: {
+        connectTimeout: 30000,
+    },
 });
 
 export default sequelize;
@@ -14,10 +24,10 @@ export const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log('Conectado a mysql');
-        await sequelize.sync(/*{alter:true}*/); // crear o actualiza los automáticamente las tablas según los modelos definidos
-        console.log('Modelos sincronizados con la base de datos');
+        await sequelize.sync();
+        console.log('Modelos sincronizados');
     } catch (err) {
-        console.error('Error conectado a mysql', err);
-        process.exit(1);
+        console.error('Error conectando a mysql', err);
+        throw err; // ← lanza el error en lugar de process.exit(1)
     }
 };
